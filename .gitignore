@@ -1,0 +1,23 @@
+# Arquivos de IDE e SO
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# Logs
+*.log
+
+# Build do Java (Maven/Gradle)
+target/
+.mvn/
+build/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Arquivos de ambiente
+.env

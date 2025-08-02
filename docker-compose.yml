@@ -1,0 +1,62 @@
+services:
+  # --- BANCOS DE DADOS E SERVIÇOS DE APOIO ---
+  postgres-db:
+    image: postgres:13
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: athos_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  mongo-db:
+    image: mongo:5.0
+    container_name: mongo-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  # --- MICROSSERVIÇOS (Exemplos, adicione os outros) ---
+  # ms-autenticacao:
+  #   build: ./ms-autenticacao
+  #   container_name: ms-autenticacao
+  #   ports:
+  #     - "8081:8080"
+  #   depends_on:
+  #     - mongo-db
+  #     - rabbitmq
+
+  # ms-evento:
+  #   build: ./ms-evento
+  #   container_name: ms-evento
+  #   ports:
+  #     - "8082:8080"
+  #   depends_on:
+  #     - postgres-db
+  #     - rabbitmq
+
+  # --- API GATEWAY ---
+  # api-gateway:
+  #   build: ./api-gateway
+  #   container_name: api-gateway
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - ms-autenticacao
+  #     - ms-evento
+  #     # ... outros serviços
+
+volumes:
+  postgres_data:
+  mongo_data:
