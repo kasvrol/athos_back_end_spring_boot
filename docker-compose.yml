@@ -1,5 +1,4 @@
 services:
-  # --- BANCOS DE DADOS E SERVIÇOS DE APOIO ---
   postgres-db:
     image: postgres:13
     container_name: postgres-db
@@ -27,35 +26,83 @@ services:
       - "5672:5672"
       - "15672:15672"
 
-  # --- MICROSSERVIÇOS (Exemplos, adicione os outros) ---
-  # ms-autenticacao:
-  #   build: ./ms-autenticacao
-  #   container_name: ms-autenticacao
-  #   ports:
-  #     - "8081:8080"
-  #   depends_on:
-  #     - mongo-db
-  #     - rabbitmq
+  # --- MICROSSERVIÇOS ---
+  ms-autenticacao:
+    build: ./ms-autenticacao
+    container_name: ms-autenticacao
+    ports:
+      - "8081:8080"
+    depends_on:
+      - mongo-db
+      - rabbitmq
 
-  # ms-evento:
-  #   build: ./ms-evento
-  #   container_name: ms-evento
-  #   ports:
-  #     - "8082:8080"
-  #   depends_on:
-  #     - postgres-db
-  #     - rabbitmq
+  ms-notificacao:
+    build: ./ms-notificacao
+    container_name: ms-notificacao
+    ports:
+      - "8082:8080"
+    depends_on:
+      - mongo-db
+      - rabbitmq
+
+  ms-evento:
+    build: ./ms-evento
+    container_name: ms-evento
+    ports:
+      - "8083:8080"
+    depends_on:
+      - postgres-db
+      - rabbitmq
+
+  ms-campeonato:
+    build: ./ms-campeonato
+    container_name: ms-campeonato
+    ports:
+      - "8084:8080"
+    depends_on:
+      - postgres-db
+      - rabbitmq
+
+  ms-pagamento:
+    build: ./ms-pagamento
+    container_name: ms-pagamento
+    ports:
+      - "8085:8080"
+    depends_on:
+      - postgres-db
+      - rabbitmq
+
+  ms-avaliacao:
+    build: ./ms-avaliacao
+    container_name: ms-avaliacao
+    ports:
+      - "8086:8080"
+    depends_on:
+      - mongo-db
+      - rabbitmq
+
+  ms-recomendacao:
+    build: ./ms-recomendacao
+    container_name: ms-recomendacao
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres-db # ou mongo-db, dependendo da fonte de dados
 
   # --- API GATEWAY ---
-  # api-gateway:
-  #   build: ./api-gateway
-  #   container_name: api-gateway
-  #   ports:
-  #     - "80:80"
-  #   depends_on:
-  #     - ms-autenticacao
-  #     - ms-evento
-  #     # ... outros serviços
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "80:80"
+    depends_on:
+      - ms-autenticacao
+      - ms-notificacao
+      - ms-evento
+      - ms-campeonato
+      - ms-pagamento
+      - ms-avaliacao
+      - ms-recomendacao
 
 volumes:
   postgres_data:
