@@ -1,4 +1,5 @@
 services:
+  # --- BANCOS DE DADOS E INFRA ---
   postgres-db:
     image: postgres:13
     container_name: postgres-db
@@ -10,6 +11,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      # Monta o ‘script’ de inicialização para criar as bases de dados separadas
+      - ./postgres/init-multiple-dbs.sh:/docker-entrypoint-initdb.d/init-multiple-dbs.sh
 
   mongo-db:
     image: mongo:5.0
@@ -87,7 +90,7 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - postgres-db # ou mongo-db, dependendo da fonte de dados
+      - postgres-db # n sei ql banco vamo usa
 
   # --- API GATEWAY ---
   api-gateway:
