@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
+    Logger logger = LoggerFactory.getLogger(JwtService.class);
+
     @Value("${jwt.secret}")
     private String SECRET_KEY;
 
@@ -21,12 +25,17 @@ public class JwtService {
     private long EXPIRATION_TIME; // ms
 
     public String generateToken(String username) {
-        return Jwts.builder()
-                .subject(username)
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(getSigningKey())
-                .compact();
+        try{
+            return Jwts.builder()
+                    .subject(username)
+                    .issuedAt(new Date(System.currentTimeMillis()))
+                    .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                    .signWith(getSigningKey())
+                    .compact();
+        }catch (Exception e){
+            logger.error("Erro ao gerar token JWT: {}", e.getMessage());
+            return null;
+        }
     }
 
     public boolean isTokenValid(String token) {

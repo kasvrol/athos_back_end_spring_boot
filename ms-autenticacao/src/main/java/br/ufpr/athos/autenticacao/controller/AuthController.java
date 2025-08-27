@@ -35,10 +35,11 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@Valid @RequestBody LoginRequestDTO loginRequest) {
         try {
-            // Tenta autenticar o usuário
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword())
             );
+
+            logger.info("Usuario autenticado com sucesso: {}", authentication.isAuthenticated());
 
             if (authentication.isAuthenticated()) {
                 String token = jwtService.generateToken(loginRequest.getEmail());
