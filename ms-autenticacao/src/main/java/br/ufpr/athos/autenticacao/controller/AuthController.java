@@ -86,8 +86,12 @@ public class AuthController {
 
         if (jwtService.isTokenValid(token)) {
             String userEmail = jwtService.extractUsername(token);
-            if (userService.findByEmail(userEmail).isPresent()) {
-                return ResponseEntity.ok().build();
+            var userOptional = userService.findByEmail(userEmail);
+            if (userOptional.isPresent()) {
+                return ResponseEntity.ok()
+                    .header("X-User-Id", userOptional.get().getId())
+                    .header("X-User-Email", userEmail)
+                    .build();
             }
         }
 

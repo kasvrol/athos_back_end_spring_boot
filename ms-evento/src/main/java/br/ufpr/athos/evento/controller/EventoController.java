@@ -25,7 +25,7 @@ public class EventoController {
     @PostMapping
     public ResponseEntity<EventoResponseDTO> criarEvento(
             @Valid @RequestBody EventoRequestDTO requestDTO,
-            @RequestHeader("X-Usuario-Id") String usuarioId) {
+            @RequestHeader("X-User-Id") String usuarioId) {
         try {
             EventoResponseDTO evento = eventoService.criarEvento(requestDTO, usuarioId);
             return ResponseEntity.status(HttpStatus.CREATED).body(evento);
@@ -37,7 +37,7 @@ public class EventoController {
     @GetMapping("/{eventoId}")
     public ResponseEntity<EventoResponseDTO> buscarEventoPorId(
             @PathVariable String eventoId,
-            @RequestHeader("X-Usuario-Id") String usuarioId) {
+            @RequestHeader("X-User-Id") String usuarioId) {
         Optional<EventoResponseDTO> evento = eventoService.buscarEventoPorId(eventoId, usuarioId);
         return evento.map(ResponseEntity::ok)
                     .orElse(ResponseEntity.notFound().build());
@@ -45,7 +45,7 @@ public class EventoController {
 
     @GetMapping
     public ResponseEntity<List<EventoResponseDTO>> listarEventos(
-            @RequestHeader("X-Usuario-Id") String usuarioId) {
+            @RequestHeader("X-User-Id") String usuarioId) {
         List<EventoResponseDTO> eventos = eventoService.listarEventos(usuarioId);
         return ResponseEntity.ok(eventos);
     }
@@ -59,7 +59,7 @@ public class EventoController {
             @RequestParam(required = false) String cep,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestHeader("X-Usuario-Id") String usuarioId) {
+            @RequestHeader("X-User-Id") String usuarioId) {
 
         Page<EventoResponseDTO> eventos = eventoService.listarEventosComFiltros(
                 esporte, publico, dataInicio, dataFim, cep, page, size, usuarioId);
@@ -69,21 +69,21 @@ public class EventoController {
     @GetMapping("/search/nome")
     public ResponseEntity<List<EventoResponseDTO>> buscarEventosPorNome(
             @RequestParam String nome,
-            @RequestHeader("X-Usuario-Id") String usuarioId) {
+            @RequestHeader("X-User-Id") String usuarioId) {
         List<EventoResponseDTO> eventos = eventoService.buscarEventosPorNome(nome, usuarioId);
         return ResponseEntity.ok(eventos);
     }
 
     @GetMapping("/futuros")
     public ResponseEntity<List<EventoResponseDTO>> listarEventosFuturos(
-            @RequestHeader("X-Usuario-Id") String usuarioId) {
+            @RequestHeader("X-User-Id") String usuarioId) {
         List<EventoResponseDTO> eventos = eventoService.listarEventosFuturos(usuarioId);
         return ResponseEntity.ok(eventos);
     }
 
     @GetMapping("/meus-eventos")
     public ResponseEntity<List<EventoResponseDTO>> listarMeusEventos(
-            @RequestHeader("X-Usuario-Id") String usuarioId) {
+            @RequestHeader("X-User-Id") String usuarioId) {
         List<EventoResponseDTO> eventos = eventoService.listarEventosCriadosPeloUsuario(usuarioId);
         return ResponseEntity.ok(eventos);
     }
@@ -92,7 +92,7 @@ public class EventoController {
     public ResponseEntity<EventoResponseDTO> atualizarEvento(
             @PathVariable String eventoId,
             @Valid @RequestBody EventoRequestDTO requestDTO,
-            @RequestHeader("X-Usuario-Id") String usuarioId) {
+            @RequestHeader("X-User-Id") String usuarioId) {
         try {
             EventoResponseDTO evento = eventoService.atualizarEvento(eventoId, requestDTO, usuarioId);
             return ResponseEntity.ok(evento);
@@ -104,7 +104,7 @@ public class EventoController {
     @DeleteMapping("/{eventoId}")
     public ResponseEntity<Void> deletarEvento(
             @PathVariable String eventoId,
-            @RequestHeader("X-Usuario-Id") String usuarioId) {
+            @RequestHeader("X-User-Id") String usuarioId) {
         try {
             eventoService.deletarEvento(eventoId, usuarioId);
             return ResponseEntity.noContent().build();
@@ -116,7 +116,7 @@ public class EventoController {
     @GetMapping("/{eventoId}/permissao-edicao")
     public ResponseEntity<Boolean> verificarPermissaoEdicao(
             @PathVariable String eventoId,
-            @RequestHeader("X-Usuario-Id") String usuarioId) {
+            @RequestHeader("X-User-Id") String usuarioId) {
         boolean temPermissao = eventoService.verificarPermissaoEdicao(eventoId, usuarioId);
         return ResponseEntity.ok(temPermissao);
     }
