@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -Command \"Get-Content ''C:\\athos_back_end_spring_boot\\documentacao_extraida.txt'' | Select-Object -Last 200\")",
+      "Bash(cat:*)",
+      "Bash(for dir in ms-*/)",
+      "Bash(do echo \"=== $dir ===\")",
+      "Bash(find:*)",
+      "Bash(done)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
