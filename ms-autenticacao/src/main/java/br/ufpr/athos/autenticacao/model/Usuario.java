@@ -21,8 +21,6 @@ public class Usuario {
 
     private String cpf;
 
-    private String foto;
-
     private LocalDate dtCadastro;
 
     private String cep;
@@ -70,14 +68,6 @@ public class Usuario {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
     }
 
     public LocalDate getDtCadastro() {

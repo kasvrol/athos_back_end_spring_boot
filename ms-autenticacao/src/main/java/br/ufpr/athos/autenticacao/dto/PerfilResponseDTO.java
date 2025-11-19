@@ -8,7 +8,6 @@ public class PerfilResponseDTO {
     private String nome;
     private String email;
     private String cpf;
-    private String foto;
     private LocalDate dtCadastro;
     private String cep;
     private List<String> bairros;
@@ -17,13 +16,12 @@ public class PerfilResponseDTO {
     public PerfilResponseDTO() {
     }
 
-    public PerfilResponseDTO(String id, String nome, String email, String cpf, String foto, 
+    public PerfilResponseDTO(String id, String nome, String email, String cpf,
                             LocalDate dtCadastro, String cep, List<String> bairros, List<String> esportes) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
-        this.foto = foto;
         this.dtCadastro = dtCadastro;
         this.cep = cep;
         this.bairros = bairros;
@@ -60,14 +58,6 @@ public class PerfilResponseDTO {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
     }
 
     public LocalDate getDtCadastro() {
