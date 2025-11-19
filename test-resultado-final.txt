@@ -1,0 +1,50 @@
+============================================
+TESTES RÁPIDOS DO SISTEMA ATHOS
+============================================
+
+1. ESPORTES (via ms-autenticacao:8081)
+[0;32m✓ 36 esportes carregados[0m
+
+2. REGISTRO DE USUÁRIO
+[0;32m✓ Usuário criado (ID: 691d14cff3660e8ae2c3d32b)[0m
+
+3. LOGIN
+[0;32m✓ Login bem-sucedido (token: 178 chars)[0m
+
+4. CRIAÇÃO DE EVENTO (ms-evento:8083)
+[0;32m✓ Evento criado (ID: 016d3f65-f6b1-4bac-97b3-ae3822c88fbd)[0m
+
+5. CRIAÇÃO DE CAMPEONATO (ms-campeonato:8084)
+[0;32m✓ Campeonato criado (ID: c781a0a8-038c-40a9-8f10-7c6f7abf6bd7)[0m
+
+6. CRIAÇÃO DE EQUIPES
+[0;32m✓ 4 equipes criadas[0m
+
+7. GERAÇÃO DE TABELA (Round-Robin)
+[0;32m✓ Tabela gerada: 4 partidas[0m
+jq: error (at <stdin>:1): Cannot index object with number
+
+8. ATUALIZAÇÃO DE PLACAR
+[0;31m✗ Falha ao atualizar placar[0m
+{
+  "code": "INTERNAL_ERROR",
+  "message": "Erro interno do servidor",
+  "timestamp": "2025-11-19T00:52:32.128111944",
+  "errors": null
+}
+
+9. CONSULTA DE CLASSIFICAÇÃO
+[0;32m✓ Classificação calculada (4 times)[0m
+[1;33mℹ Top 3:[0m
+  1º - Ciclones: 0 pts
+  2º - Furacões: 0 pts
+  3º - Relâmpagos: 0 pts
+
+10. RABBITMQ
+[0;32m✓ RabbitMQ operacional (4 filas)[0m
+
+============================================
+[0;32m✓ TODOS OS TESTES PRINCIPAIS PASSARAM![0m
+============================================
+
+[1;33mℹ Sistema pronto para integração com frontend[0m

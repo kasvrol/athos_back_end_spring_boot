@@ -5,6 +5,7 @@ import br.ufpr.athos.campeonato.dto.CampeonatoRequestDTO;
 import br.ufpr.athos.campeonato.dto.CampeonatoResponseDTO;
 import br.ufpr.athos.campeonato.event.CampeonatoEvent;
 import br.ufpr.athos.campeonato.exception.ResourceNotFoundException;
+import br.ufpr.athos.campeonato.exception.ValidationException;
 import br.ufpr.athos.campeonato.model.Campeonato;
 import br.ufpr.athos.campeonato.repository.CampeonatoRepository;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -23,12 +24,41 @@ public class CampeonatoService {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @Autowired
+    private EsporteValidationService esporteValidationService;
+
     public CampeonatoResponseDTO criarCampeonato(CampeonatoRequestDTO request) {
+        // Validate sport
+        if (!esporteValidationService.validarEsporte(request.getEsporte())) {
+            throw new ValidationException("Esporte inválido: " + request.getEsporte());
+        }
+
+        // Validate dates: dataInscricaoInicio < dataInscricaoFim < dataInicio < dataFim
+        if (request.getDataInscricaoInicio() != null && request.getDataInscricaoFim() != null) {
+            if (request.getDataInscricaoInicio().isAfter(request.getDataInscricaoFim())) {
+                throw new ValidationException("Data de início das inscrições deve ser anterior à data de fim das inscrições");
+            }
+        }
+
+        if (request.getDataInscricaoFim() != null && request.getDataInicio() != null) {
+            if (request.getDataInscricaoFim().isAfter(request.getDataInicio())) {
+                throw new ValidationException("Data de fim das inscrições deve ser anterior à data de início do campeonato");
+            }
+        }
+
+        if (request.getDataInicio() != null && request.getDataFim() != null) {
+            if (request.getDataInicio().isAfter(request.getDataFim())) {
+                throw new ValidationException("Data de início do campeonato deve ser anterior à data de fim");
+            }
+        }
+
         Campeonato campeonato = new Campeonato();
         campeonato.setNome(request.getNome());
         campeonato.setEsporte(request.getEsporte());
         campeonato.setDataInicio(request.getDataInicio());
         campeonato.setDataFim(request.getDataFim());
+        campeonato.setDataInscricaoInicio(request.getDataInscricaoInicio());
+        campeonato.setDataInscricaoFim(request.getDataInscricaoFim());
         campeonato.setFormato(Campeonato.FormatoCampeonato.valueOf(request.getFormato()));
         campeonato.setOrganizadorId(request.getOrganizadorId());
         campeonato.setDescricao(request.getDescricao());

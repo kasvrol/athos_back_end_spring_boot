@@ -2,8 +2,7 @@ package br.ufpr.athos.campeonato.dto;
 
 public class ClassificacaoDTO {
     private Integer posicao;
-    private String equipeId;
-    private String equipeNome;
+    private EquipeResponseDTO equipe;
     private Integer jogos;
     private Integer vitorias;
     private Integer empates;
@@ -18,12 +17,11 @@ public class ClassificacaoDTO {
     }
 
     // Constructor with all fields for easy creation
-    public ClassificacaoDTO(Integer posicao, String equipeId, String equipeNome, Integer jogos,
+    public ClassificacaoDTO(Integer posicao, EquipeResponseDTO equipe, Integer jogos,
                            Integer vitorias, Integer empates, Integer derrotas, Integer golsFeitos,
                            Integer golsSofridos, Integer saldoGols, Integer pontos) {
         this.posicao = posicao;
-        this.equipeId = equipeId;
-        this.equipeNome = equipeNome;
+        this.equipe = equipe;
         this.jogos = jogos;
         this.vitorias = vitorias;
         this.empates = empates;
@@ -43,20 +41,12 @@ public class ClassificacaoDTO {
         this.posicao = posicao;
     }
 
-    public String getEquipeId() {
-        return equipeId;
+    public EquipeResponseDTO getEquipe() {
+        return equipe;
     }
 
-    public void setEquipeId(String equipeId) {
-        this.equipeId = equipeId;
-    }
-
-    public String getEquipeNome() {
-        return equipeNome;
-    }
-
-    public void setEquipeNome(String equipeNome) {
-        this.equipeNome = equipeNome;
+    public void setEquipe(EquipeResponseDTO equipe) {
+        this.equipe = equipe;
     }
 
     public Integer getJogos() {
@@ -121,5 +111,10 @@ public class ClassificacaoDTO {
 
     public void setPontos(Integer pontos) {
         this.pontos = pontos;
+    }
+
+    // Helper method for getting equipe nome (used for sorting)
+    public String getEquipeNome() {
+        return equipe != null ? equipe.getNome() : "";
     }
 }

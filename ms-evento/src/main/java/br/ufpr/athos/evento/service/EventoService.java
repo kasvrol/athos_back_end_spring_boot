@@ -27,8 +27,16 @@ public class EventoService {
     @Autowired
     private ParticipacaoEventoRepository participacaoRepository;
 
+    @Autowired
+    private EsporteValidationService esporteValidationService;
+
     public EventoResponseDTO criarEvento(EventoRequestDTO requestDTO, String criadorId) {
         validateEventoRequest(requestDTO);
+
+        // Validate sport
+        if (!esporteValidationService.validarEsporte(requestDTO.getEsporte())) {
+            throw new RuntimeException("Esporte inválido: " + requestDTO.getEsporte());
+        }
 
         Evento evento = new Evento();
         evento.setNome(requestDTO.getNome());
@@ -128,6 +136,11 @@ public class EventoService {
         }
 
         validateEventoRequest(requestDTO);
+
+        // Validate sport
+        if (!esporteValidationService.validarEsporte(requestDTO.getEsporte())) {
+            throw new RuntimeException("Esporte inválido: " + requestDTO.getEsporte());
+        }
 
         evento.setNome(requestDTO.getNome());
         evento.setData(requestDTO.getData());

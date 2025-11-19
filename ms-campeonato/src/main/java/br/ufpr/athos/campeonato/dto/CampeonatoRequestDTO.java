@@ -11,6 +11,12 @@ public class CampeonatoRequestDTO {
     @NotBlank(message = "Esporte é obrigatório")
     private String esporte;
 
+    @NotNull(message = "Data de início das inscrições é obrigatória")
+    private LocalDate dataInscricaoInicio;
+
+    @NotNull(message = "Data de término das inscrições é obrigatória")
+    private LocalDate dataInscricaoFim;
+
     @NotNull(message = "Data de início é obrigatória")
     private LocalDate dataInicio;
 
@@ -41,6 +47,22 @@ public class CampeonatoRequestDTO {
 
     public void setEsporte(String esporte) {
         this.esporte = esporte;
+    }
+
+    public LocalDate getDataInscricaoInicio() {
+        return dataInscricaoInicio;
+    }
+
+    public void setDataInscricaoInicio(LocalDate dataInscricaoInicio) {
+        this.dataInscricaoInicio = dataInscricaoInicio;
+    }
+
+    public LocalDate getDataInscricaoFim() {
+        return dataInscricaoFim;
+    }
+
+    public void setDataInscricaoFim(LocalDate dataInscricaoFim) {
+        this.dataInscricaoFim = dataInscricaoFim;
     }
 
     public LocalDate getDataInicio() {

@@ -85,13 +85,14 @@ services:
       - mongo-db
       - rabbitmq
 
-  ms-recomendacao:
-    build: ./ms-recomendacao
-    container_name: ms-recomendacao
-    ports:
-      - "8000:8000"
-    depends_on:
-      - postgres-db # n sei ql banco vamo usa
+  # ms-recomendacao: DESATIVADO - Problemas de compatibilidade Python 3.11 + scikit-surprise
+  # ms-recomendacao:
+  #   build: ./ms-recomendacao
+  #   container_name: ms-recomendacao
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on:
+  #     - postgres-db
 
   # --- API GATEWAY ---
   api-gateway:
@@ -106,7 +107,7 @@ services:
       - ms-campeonato
       # - ms-pagamento  # DESATIVADO
       - ms-avaliacao
-      - ms-recomendacao
+      # - ms-recomendacao  # DESATIVADO
 
 volumes:
   postgres_data:

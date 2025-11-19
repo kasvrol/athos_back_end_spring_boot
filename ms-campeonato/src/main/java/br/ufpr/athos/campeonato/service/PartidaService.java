@@ -2,7 +2,7 @@ package br.ufpr.athos.campeonato.service;
 
 import br.ufpr.athos.campeonato.config.RabbitMQConfig;
 import br.ufpr.athos.campeonato.dto.AtualizarPlacarDTO;
-import br.ufpr.athos.campeonato.dto.EquipeSummaryDTO;
+import br.ufpr.athos.campeonato.dto.EquipeResponseDTO;
 import br.ufpr.athos.campeonato.dto.PartidaRequestDTO;
 import br.ufpr.athos.campeonato.dto.PartidaResponseDTO;
 import br.ufpr.athos.campeonato.event.PartidaEvent;
@@ -40,6 +40,9 @@ public class PartidaService {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private EquipeService equipeService;
 
     @Transactional
     public PartidaResponseDTO criarPartida(PartidaRequestDTO dto) {
@@ -256,21 +259,19 @@ public class PartidaService {
         dto.setCampeonatoId(partida.getCampeonato().getId());
         dto.setCampeonatoNome(partida.getCampeonato().getNome());
 
-        EquipeSummaryDTO equipe1DTO = new EquipeSummaryDTO(
-                partida.getEquipe1().getId(),
-                partida.getEquipe1().getNome()
-        );
+        // Convert full Equipe entities to EquipeResponseDTO (with membros)
+        EquipeResponseDTO equipe1DTO = equipeService.buscarPorId(partida.getEquipe1().getId());
         dto.setEquipe1(equipe1DTO);
 
-        EquipeSummaryDTO equipe2DTO = new EquipeSummaryDTO(
-                partida.getEquipe2().getId(),
-                partida.getEquipe2().getNome()
-        );
+        EquipeResponseDTO equipe2DTO = equipeService.buscarPorId(partida.getEquipe2().getId());
         dto.setEquipe2(equipe2DTO);
 
         dto.setPlacarEquipe1(partida.getPlacarEquipe1());
         dto.setPlacarEquipe2(partida.getPlacarEquipe2());
+
+        // Set dataHora which automatically populates data and horario fields
         dto.setDataHora(partida.getDataHora());
+
         dto.setLocal(partida.getLocal());
         dto.setFase(partida.getFase());
         dto.setRodada(partida.getRodada());

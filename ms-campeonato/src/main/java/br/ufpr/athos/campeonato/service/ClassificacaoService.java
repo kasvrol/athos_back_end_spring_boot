@@ -1,6 +1,7 @@
 package br.ufpr.athos.campeonato.service;
 
 import br.ufpr.athos.campeonato.dto.ClassificacaoDTO;
+import br.ufpr.athos.campeonato.dto.EquipeResponseDTO;
 import br.ufpr.athos.campeonato.dto.EstatisticasDTO;
 import br.ufpr.athos.campeonato.model.Equipe;
 import br.ufpr.athos.campeonato.model.Partida;
@@ -20,6 +21,9 @@ public class ClassificacaoService {
 
     @Autowired
     private EquipeRepository equipeRepository;
+
+    @Autowired
+    private EquipeService equipeService;
 
     /**
      * Calculates the standings table for a championship
@@ -47,9 +51,11 @@ public class ClassificacaoService {
         Map<String, ClassificacaoDTO> classificacaoMap = new HashMap<>();
 
         for (Equipe equipe : equipes) {
+            // Convert Equipe to EquipeResponseDTO with membros
+            EquipeResponseDTO equipeDTO = equipeService.buscarPorId(equipe.getId());
+
             ClassificacaoDTO dto = new ClassificacaoDTO();
-            dto.setEquipeId(equipe.getId());
-            dto.setEquipeNome(equipe.getNome());
+            dto.setEquipe(equipeDTO);
             dto.setJogos(0);
             dto.setVitorias(0);
             dto.setEmpates(0);

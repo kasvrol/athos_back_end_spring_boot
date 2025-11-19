@@ -1,6 +1,8 @@
 package br.ufpr.athos.campeonato.dto;
 
 import br.ufpr.athos.campeonato.model.Equipe;
+import java.util.List;
+import java.util.ArrayList;
 
 public class EquipeResponseDTO {
 
@@ -9,17 +11,19 @@ public class EquipeResponseDTO {
     private String campeonatoId;
     private String campeonatoNome;
     private String capitaoId;
-    private Integer totalMembros;
+    private List<MembroEquipeSimpleDTO> membros = new ArrayList<>();
+    private String createdAt;
 
     public EquipeResponseDTO() {}
 
     public EquipeResponseDTO(Equipe equipe) {
         this.id = equipe.getId();
         this.nome = equipe.getNome();
-        this.campeonatoId = equipe.getCampeonato().getId();
-        this.campeonatoNome = equipe.getCampeonato().getNome();
+        this.campeonatoId = equipe.getCampeonato() != null ? equipe.getCampeonato().getId() : null;
+        this.campeonatoNome = equipe.getCampeonato() != null ? equipe.getCampeonato().getNome() : null;
         this.capitaoId = equipe.getCapitaoId();
-        this.totalMembros = equipe.getMembros() != null ? equipe.getMembros().size() : 0;
+        this.createdAt = equipe.getDataCriacao() != null ? equipe.getDataCriacao().toString() : null;
+        // membros será populado pelo Service com consulta RabbitMQ
     }
 
     // Getters and Setters
@@ -63,11 +67,19 @@ public class EquipeResponseDTO {
         this.capitaoId = capitaoId;
     }
 
-    public Integer getTotalMembros() {
-        return totalMembros;
+    public List<MembroEquipeSimpleDTO> getMembros() {
+        return membros;
     }
 
-    public void setTotalMembros(Integer totalMembros) {
-        this.totalMembros = totalMembros;
+    public void setMembros(List<MembroEquipeSimpleDTO> membros) {
+        this.membros = membros;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }
