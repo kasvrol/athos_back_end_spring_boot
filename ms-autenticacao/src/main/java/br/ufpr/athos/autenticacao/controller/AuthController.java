@@ -63,7 +63,6 @@ public class AuthController {
             novoUsuario.setNome(registroRequest.getNome());
             novoUsuario.setEmail(registroRequest.getEmail());
             novoUsuario.setSenha(registroRequest.getSenha());
-            novoUsuario.setCpf(registroRequest.getCpf());
             novoUsuario.setCep(registroRequest.getCep());
             novoUsuario.setBairros(registroRequest.getBairros());
             novoUsuario.setEsportes(registroRequest.getEsportes());

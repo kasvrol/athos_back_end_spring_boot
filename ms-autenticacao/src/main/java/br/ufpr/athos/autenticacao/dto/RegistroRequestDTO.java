@@ -12,9 +12,6 @@ public class RegistroRequestDTO {
     @NotBlank(message = "O nome não pode estar em branco")
     private String nome;
 
-    @NotBlank(message = "O CPF não pode estar em branco")
-    private String cpf;
-
     @NotBlank(message = "O e-mail não pode estar em branco")
     @Email(message = "Formato de e-mail inválido")
     private String email;
@@ -40,9 +37,8 @@ public class RegistroRequestDTO {
     public RegistroRequestDTO() {
     }
 
-    public RegistroRequestDTO(String nome, String cpf, String email, String senha, String confirmacaoSenha, String cep, List<String> bairros, List<String> esportes) {
+    public RegistroRequestDTO(String nome, String email, String senha, String confirmacaoSenha, String cep, List<String> bairros, List<String> esportes) {
         this.nome = nome;
-        this.cpf = cpf;
         this.email = email;
         this.senha = senha;
         this.confirmacaoSenha = confirmacaoSenha;
@@ -58,14 +54,6 @@ public class RegistroRequestDTO {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public String getEmail() {

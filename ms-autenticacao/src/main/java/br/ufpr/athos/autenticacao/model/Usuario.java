@@ -19,8 +19,6 @@ public class Usuario {
 
     private String senha;
 
-    private String cpf;
-
     private LocalDate dtCadastro;
 
     private String cep;
@@ -60,14 +58,6 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public LocalDate getDtCadastro() {
