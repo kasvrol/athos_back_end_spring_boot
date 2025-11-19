@@ -66,14 +66,15 @@ services:
       - postgres-db
       - rabbitmq
 
-  ms-pagamento:
-    build: ./ms-pagamento
-    container_name: ms-pagamento
-    ports:
-      - "8085:8080"
-    depends_on:
-      - postgres-db
-      - rabbitmq
+  # ms-pagamento: DESATIVADO - Removido conforme decisão do projeto
+  # ms-pagamento:
+  #   build: ./ms-pagamento
+  #   container_name: ms-pagamento
+  #   ports:
+  #     - "8085:8080"
+  #   depends_on:
+  #     - postgres-db
+  #     - rabbitmq
 
   ms-avaliacao:
     build: ./ms-avaliacao
@@ -103,7 +104,7 @@ services:
       - ms-notificacao
       - ms-evento
       - ms-campeonato
-      - ms-pagamento
+      # - ms-pagamento  # DESATIVADO
       - ms-avaliacao
       - ms-recomendacao
 

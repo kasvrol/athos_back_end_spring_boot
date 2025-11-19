@@ -75,10 +75,10 @@ public class Campeonato {
     }
 
     public enum FormatoCampeonato {
-        PONTOS_CORRIDOS,
-        ELIMINATORIO,
-        GRUPOS_ELIMINATORIO,
-        MATA_MATA
+        PONTOS_CORRIDOS
+        // MATA_MATA removido conforme decisão do projeto
+        // ELIMINATORIO removido - usar apenas PONTOS_CORRIDOS
+        // GRUPOS_ELIMINATORIO removido - usar apenas PONTOS_CORRIDOS
     }
 
     public enum StatusCampeonato {

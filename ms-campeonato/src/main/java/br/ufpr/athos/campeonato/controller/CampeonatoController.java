@@ -2,7 +2,10 @@ package br.ufpr.athos.campeonato.controller;
 
 import br.ufpr.athos.campeonato.dto.CampeonatoRequestDTO;
 import br.ufpr.athos.campeonato.dto.CampeonatoResponseDTO;
+import br.ufpr.athos.campeonato.dto.ClassificacaoDTO;
+import br.ufpr.athos.campeonato.dto.EstatisticasDTO;
 import br.ufpr.athos.campeonato.service.CampeonatoService;
+import br.ufpr.athos.campeonato.service.ClassificacaoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,9 @@ public class CampeonatoController {
 
     @Autowired
     private CampeonatoService campeonatoService;
+
+    @Autowired
+    private ClassificacaoService classificacaoService;
 
     @PostMapping
     public ResponseEntity<CampeonatoResponseDTO> criarCampeonato(@Valid @RequestBody CampeonatoRequestDTO request) {
@@ -64,5 +70,17 @@ public class CampeonatoController {
     public ResponseEntity<Void> deletarCampeonato(@PathVariable String id) {
         campeonatoService.deletarCampeonato(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/classificacao")
+    public ResponseEntity<List<ClassificacaoDTO>> obterClassificacao(@PathVariable String id) {
+        List<ClassificacaoDTO> classificacao = classificacaoService.calcularClassificacao(id);
+        return ResponseEntity.ok(classificacao);
+    }
+
+    @GetMapping("/{id}/estatisticas")
+    public ResponseEntity<EstatisticasDTO> obterEstatisticas(@PathVariable String id) {
+        EstatisticasDTO estatisticas = classificacaoService.calcularEstatisticas(id);
+        return ResponseEntity.ok(estatisticas);
     }
 }

@@ -1,8 +1,11 @@
 package br.ufpr.athos.campeonato.controller;
 
+import br.ufpr.athos.campeonato.dto.AdicionarMembroDTO;
 import br.ufpr.athos.campeonato.dto.EquipeRequestDTO;
 import br.ufpr.athos.campeonato.dto.EquipeResponseDTO;
+import br.ufpr.athos.campeonato.dto.MembroEquipeResponseDTO;
 import br.ufpr.athos.campeonato.service.EquipeService;
+import br.ufpr.athos.campeonato.service.MembroEquipeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,9 @@ public class EquipeController {
 
     @Autowired
     private EquipeService equipeService;
+
+    @Autowired
+    private MembroEquipeService membroService;
 
     @PostMapping
     public ResponseEntity<EquipeResponseDTO> criarEquipe(@Valid @RequestBody EquipeRequestDTO request) {
@@ -53,6 +59,29 @@ public class EquipeController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarEquipe(@PathVariable String id) {
         equipeService.deletarEquipe(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/membros")
+    public ResponseEntity<MembroEquipeResponseDTO> adicionarMembro(
+            @PathVariable String id,
+            @Valid @RequestBody AdicionarMembroDTO dto
+    ) {
+        MembroEquipeResponseDTO response = membroService.adicionarMembro(id, dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/{id}/membros")
+    public ResponseEntity<List<MembroEquipeResponseDTO>> listarMembros(@PathVariable String id) {
+        return ResponseEntity.ok(membroService.listarMembros(id));
+    }
+
+    @DeleteMapping("/{id}/membros/{membroId}")
+    public ResponseEntity<Void> removerMembro(
+            @PathVariable String id,
+            @PathVariable String membroId
+    ) {
+        membroService.removerMembro(id, membroId);
         return ResponseEntity.noContent().build();
     }
 }
