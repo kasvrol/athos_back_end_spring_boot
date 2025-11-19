@@ -46,6 +46,14 @@ public class EquipeController {
         return ResponseEntity.ok(equipes);
     }
 
+    @GetMapping("/capitao/{capitaoId}/inscricoes-abertas")
+    public ResponseEntity<List<EquipeResponseDTO>> listarPorCapitaoInscricoesAbertas(
+            @PathVariable String capitaoId
+    ) {
+        List<EquipeResponseDTO> equipes = equipeService.listarPorCapitaoInscricoesAbertas(capitaoId);
+        return ResponseEntity.ok(equipes);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<EquipeResponseDTO> buscarPorId(@PathVariable String id) {
         try {

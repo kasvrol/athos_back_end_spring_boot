@@ -92,6 +92,16 @@ public class EquipeService {
                 .collect(Collectors.toList());
     }
 
+    public List<EquipeResponseDTO> listarPorCapitaoInscricoesAbertas(String capitaoId) {
+        return equipeRepository.findByCapitaoIdAndCampeonato_StatusOrderByDataCriacaoDesc(
+                        capitaoId,
+                        Campeonato.StatusCampeonato.INSCRICOES_ABERTAS
+                )
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     public EquipeResponseDTO buscarPorId(String id) {
         Equipe equipe = equipeRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Equipe", id));

@@ -1,5 +1,6 @@
 package br.ufpr.athos.campeonato.repository;
 
+import br.ufpr.athos.campeonato.model.Campeonato;
 import br.ufpr.athos.campeonato.model.Equipe;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,4 +13,9 @@ public interface EquipeRepository extends JpaRepository<Equipe, String> {
     List<Equipe> findByCampeonatoIdOrderByNome(String campeonatoId);
 
     List<Equipe> findByCapitaoIdOrderByDataCriacaoDesc(String capitaoId);
+
+    List<Equipe> findByCapitaoIdAndCampeonato_StatusOrderByDataCriacaoDesc(
+            String capitaoId,
+            Campeonato.StatusCampeonato status
+    );
 }
